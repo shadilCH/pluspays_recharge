@@ -300,6 +300,7 @@ var code;
     final ss = MediaQuery.of(context).size;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -369,7 +370,7 @@ var code;
                                   children: [
                                     Icon(Icons.arrow_drop_down_sharp),
                                     Container(
-                                      child: Center(child: code!=""?Text("+"+code,style: TextStyle(fontSize: width*0.04,),):Text("+00"+code,style: TextStyle(fontSize: width*0.04,),)),
+                                      child: Center(child: code!=""?Text("+"+code,style: TextStyle(fontSize: width*0.04,),):Text("+93",style: TextStyle(fontSize: width*0.04,),)),
 
                                     ),
                                   ],
@@ -394,7 +395,7 @@ var code;
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      getHome(code+numController.text.toString(),"top_up");
+                      getHome(code!=""?code+numController.text.toString():"93"+numController.text,"top_up");
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(right: 10),
