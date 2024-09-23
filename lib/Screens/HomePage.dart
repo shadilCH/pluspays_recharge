@@ -8,6 +8,8 @@ import 'package:pluspay/Screens/login.dart';
 import 'package:pluspay/Widget/IndianTab.dart';
 import 'package:pluspay/Widget/IntTab.dart';
 
+import '../main.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({ key}) : super(key: key);
 
@@ -96,7 +98,8 @@ class _HomePageState extends State<HomePage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
-                          width: 325,
+                          width: width*1,
+                          height: width*0.13,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(25),
                               color: Colors.white,
@@ -122,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.white,
                                 fontFamily: 'Poppins',
                                 fontSize:
-                                    MediaQuery.of(context).size.height * 0.02,
+                                    MediaQuery.of(context).size.width * 0.035,
                                 fontWeight: FontWeight.bold,
                                 letterSpacing: 1),
                             tabs: [
@@ -157,7 +160,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.black,
                                 fontFamily: 'Poppins',
                                 fontSize:
-                                    MediaQuery.of(context).size.height * 0.018,
+                                    MediaQuery.of(context).size.width * 0.035,
                                 fontWeight: FontWeight.bold),
                             unselectedLabelColor:Colors.black,
                             automaticIndicatorColorAdjustment: true,

@@ -39,23 +39,23 @@ class _InternationalTabState extends State<InternationalTab> {
   int _selectedIndex = 0;
   List All = [
     {
-      "Size":150.0,
-      "text":"International Recharge",
+      "Size":width*0.3,
+      "text":"International\nRecharge",
     },
     {
-      "Size":100.0,
-      "text":"Soudi Prepaid",
+      "Size":width*0.28,
+      "text":"Prepaid",
     },
     {
-      "Size":80.0,
+      "Size":width*0.22,
       "text":"Voucher",
     },
     {
-      "Size":110.0,
+      "Size":width*0.29,
       "text":"Gaming Card",
     },
     {
-      "Size":50.0,
+      "Size":width*0.15,
       "text":"DTH",
     },
   ];
@@ -239,7 +239,7 @@ class _InternationalTabState extends State<InternationalTab> {
 
   Widget Balance_Due(String txt, String amount) {
     return Container(
-      height: width*0.26,
+      height: width*0.22,
       width: width*0.32,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
@@ -258,7 +258,7 @@ class _InternationalTabState extends State<InternationalTab> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 13,
+                    fontSize: width*0.03,
                     fontWeight: FontWeight.w300),
               ),
             ),
@@ -268,7 +268,7 @@ class _InternationalTabState extends State<InternationalTab> {
                 amount,
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 15,
+                    fontSize: width*0.035,
                     fontWeight: FontWeight.bold),
               ),
             )
@@ -283,7 +283,7 @@ class _InternationalTabState extends State<InternationalTab> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => YourAccount()),
+          MaterialPageRoute(builder: (context) => YourAccount(code: "",)),
         );
       },
       child: Center(
@@ -361,8 +361,8 @@ class _InternationalTabState extends State<InternationalTab> {
   Widget tab(){
     return Row(children: [
       Container(
-        height: width*0.1,
-        width: width*0.9,
+        height: width*0.11,
+        width: width*0.93,
         child: ListView.separated(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
@@ -377,7 +377,7 @@ class _InternationalTabState extends State<InternationalTab> {
                       });
                     },
                     child: Container(
-                      height: width*0.092,
+                      height: width*0.11,
                       width: All[index]["Size"],
                       margin: EdgeInsets.only(left: width*0.035),
                       decoration: BoxDecoration(
@@ -389,7 +389,7 @@ class _InternationalTabState extends State<InternationalTab> {
                           All[index]["text"],
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.clip,
-                          style: TextStyle(color:_selectedIndex==index ? Colors.white: Colors.black, fontSize:width*0.032),
+                          style: TextStyle(color:_selectedIndex==index ? Colors.white: Colors.black, fontSize:width*0.027),
                         ),
                       ),
                     ),

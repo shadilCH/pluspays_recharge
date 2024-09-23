@@ -33,14 +33,19 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'PlusPays',
-      theme: ThemeData(fontFamily: 'Poppins'),
-      // theme: _light ? _lightTheme : _darkTheme,
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus!.unfocus();
+      },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'PlusPays',
+        theme: ThemeData(fontFamily: 'Poppins'),
+        // theme: _light ? _lightTheme : _darkTheme,
 
-      home: SplashScreen(),
-      // home: Login(),
+        home: SplashScreen(),
+        // home: Login(),
+      ),
     );
   }
 }

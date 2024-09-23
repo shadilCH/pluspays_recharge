@@ -1,3 +1,4 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pluspay/Api/RechargeApi.dart';
@@ -53,18 +54,18 @@ class _YourAccountState extends State<YourAccount> {
   var ReceiveValue;
  var CoupenTitle;
 var  type;
+var code;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
     print("xoxoxo");
     this.getColor();
-
+    code= widget.code;
     setState(() {
-      if (widget.code != null) {
-        numController.text = widget.code;
-      }
+      // if (widget.code != null) {
+      //   numController.text = widget.code;
+      // }
     });
   }
 
@@ -331,27 +332,49 @@ var  type;
                               topLeft: Radius.circular(25)),
                           border: Border.all(color: Colors.black12)),
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 30),
+                        padding:  EdgeInsets.only(left: width*0.03),
                         child: TextFormField(
                           controller: numController,
                           cursorColor: Colors.black,
                           autofocus: false,
                           keyboardType: TextInputType.number,
                           style: TextStyle(
-                            fontSize: ss.height * 0.02,
+                            fontSize: ss.height * 0.025,
                             letterSpacing: 0.8,
                             fontWeight: FontWeight.w600,
                           ),
                           decoration: new InputDecoration(
                             border: InputBorder.none,
-                            contentPadding: EdgeInsets.only(top: width*0.01,bottom: width*0.02),
-                            prefixIconConstraints:
-                                BoxConstraints(minWidth: 0, minHeight: 0),
+                            contentPadding: EdgeInsets.only(top: width*0.01),
+                            // prefixIconConstraints:
+                            //     BoxConstraints(minWidth: 0, minHeight: 0),
+                            prefix: InkWell(
+                              onTap: () {
+                                showCountryPicker(
+                                  context: context,
+                                  showPhoneCode: true, // optional. Shows phone code before the country name.
+                                  onSelect: (Country country) {
+                                    setState(() {
+
+                                      code =country.phoneCode.toString();
+
+                                    });
+                                    print('Select country: ${country.flagEmoji}');
+                                  },
+                                );
+                              },
+                              child: Container(
+
+                                width: width*0.12,
+                                child: Center(child: Text("+"+code,style: TextStyle(fontSize: width*0.04,),)),
+
+                              ),
+                            ),
                             hintStyle: TextStyle(
                                 fontSize: ss.height * 0.02,
                                 fontWeight: FontWeight.w300,
                                 color: Colors.black45),
-                            hintText: "Mobile Number",
+                            hintText: " Mobile Number",
                             focusedBorder: InputBorder.none,
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
@@ -365,7 +388,7 @@ var  type;
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      getHome(numController.text.toString(),"top_up");
+                      getHome(code+numController.text.toString(),"top_up");
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(right: 10),
@@ -409,14 +432,14 @@ var  type;
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 box("TopUp", () {
-                  getHome(numController.text.toString(),"top_up");
+                  getHome(code+numController.text.toString(),"top_up");
 
                 }),
                 box("Data", () {
-                  getHome(numController.text.toString(),"data");
+                  getHome(code+numController.text.toString(),"data");
                 }),
                 box("Combo", () {
-                  getHome(numController.text.toString(),"combo");
+                  getHome(code+numController.text.toString(),"combo");
                 })
               ],
             ):Container(),
@@ -532,14 +555,14 @@ var  type;
                           maxLines: 2,
                           style: TextStyle(
                               color: dash == "1" ? themePink : themeBlue,
-                              fontSize: ss.height * 0.025,
+                              fontSize: ss.height * 0.022,
                               fontWeight: FontWeight.w500),
                         ),
                         Text(
                           "Expiry Date : "+ item['Expiry_Date'].toString(),
                           style: TextStyle(
                               color: dash == "1" ? themePink : themeBlue,
-                              fontSize: 12,
+                              fontSize: width*0.03,
                               fontWeight: FontWeight.w600),
                         ),
                       ],
@@ -609,7 +632,6 @@ var  type;
       ),
     );
   }
-
 
   txtBox2() {
     final ss = MediaQuery.of(context).size;
