@@ -339,7 +339,7 @@ var code;
                           autofocus: false,
                           keyboardType: TextInputType.number,
                           style: TextStyle(
-                            fontSize: ss.height * 0.025,
+                            fontSize: width * 0.04,
                             letterSpacing: 0.8,
                             fontWeight: FontWeight.w600,
                           ),
