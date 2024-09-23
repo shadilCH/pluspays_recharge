@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'Screens/Splash.dart';
 var width;
 var height;
 void main() {
   runApp(MyApp());
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
 }
 
 class MyApp extends StatefulWidget {

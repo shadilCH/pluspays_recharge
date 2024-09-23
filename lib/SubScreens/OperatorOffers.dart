@@ -8,6 +8,7 @@ import 'package:pluspay/Const/sharedPref.dart';
 import 'package:pluspay/Const/snackbar_toast_helper.dart';
 import 'package:pluspay/SubScreens/PrintPage.dart';
 
+import '../main.dart';
 import 'RechargeNow.dart';
 
 class OperatorOffers extends StatefulWidget {
@@ -315,6 +316,7 @@ class _OperatorOffersState extends State<OperatorOffers> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      SizedBox(width: width*0.05,),
                       Expanded(
                         child: Padding(
                           padding: EdgeInsets.only(left: ss.width * 0.05),
@@ -351,7 +353,7 @@ class _OperatorOffersState extends State<OperatorOffers> {
                         // ),
                       ),
                       SizedBox(
-                        width: ss.width * 0.05,
+                        width: width * 0.09,
                       ),
                     ],
                   ),
@@ -528,18 +530,10 @@ class _OperatorOffersState extends State<OperatorOffers> {
             child: Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Container(
-                height: ss.height * 0.08,
+                height: ss.height * 0.06,
 
                 decoration: BoxDecoration(
                     color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: (Colors.grey.shade300),
-                        spreadRadius: 1,
-                        blurRadius: 1,
-                        offset: Offset(0, 1),
-                      ),
-                    ],
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(10),
                         topLeft: Radius.circular(10)),
@@ -558,10 +552,11 @@ class _OperatorOffersState extends State<OperatorOffers> {
                     ),
                     decoration: new InputDecoration(
                       border: InputBorder.none,
+                      contentPadding: EdgeInsets.only(bottom: width*0.021),
                       prefixIconConstraints:
                       BoxConstraints(minWidth: 0, minHeight: 0),
                       hintStyle: TextStyle(
-                          fontSize: ss.height * 0.021,
+                          fontSize: ss.height * 0.02,
                           fontWeight: FontWeight.w400,
                           color: Colors.black45),
                       hintText: "Recharge Amount",
@@ -618,7 +613,7 @@ class _OperatorOffersState extends State<OperatorOffers> {
                 padding: const EdgeInsets.only(right: 10),
                 child:Container(
                   alignment: Alignment.center,
-                  height: ss.height * 0.08,
+                  height: ss.height * 0.06,
                   child: customTap==false?Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -627,7 +622,7 @@ class _OperatorOffersState extends State<OperatorOffers> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            fontSize: ss.height * 0.023),
+                            fontSize: ss.height * 0.02),
                       ),
                       Icon(
                         Icons.arrow_forward_ios,
@@ -637,16 +632,8 @@ class _OperatorOffersState extends State<OperatorOffers> {
                     ],
                   ):CircularProgressIndicator(),
                   decoration: BoxDecoration(
-                      gradient: grad,
+                      color: themePink,
                       border: Border.all(color: Colors.black12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: (Colors.grey.shade300),
-                          spreadRadius: 1,
-                          blurRadius: 1,
-                          offset: Offset(0, 1),
-                        ),
-                      ],
                       borderRadius: BorderRadius.only(
                           bottomRight: Radius.circular(10),
                           topRight: Radius.circular(10))),
@@ -668,22 +655,14 @@ class _OperatorOffersState extends State<OperatorOffers> {
           Expanded(
             flex: 4,
             child: Padding(
-              padding: const EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.only(left: 20),
               child: Container(
-                height: ss.height * 0.08,
+                height: ss.height * 0.06,
                 decoration: BoxDecoration(
                     color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: (Colors.grey.shade300),
-                        spreadRadius: 1,
-                        blurRadius: 1,
-                        offset: Offset(0, 1),
-                      ),
-                    ],
                     borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(25),
-                        topLeft: Radius.circular(25)),
+                        bottomLeft: Radius.circular(10),
+                        topLeft: Radius.circular(10)),
                     border: Border.all(color: Colors.black12)),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 30),
@@ -702,9 +681,10 @@ class _OperatorOffersState extends State<OperatorOffers> {
                       prefixIconConstraints:
                       BoxConstraints(minWidth: 0, minHeight: 0),
                       hintStyle: TextStyle(
-                          fontSize: ss.height * 0.023,
+                          fontSize: ss.height * 0.02,
                           fontWeight: FontWeight.w300,
                           color: Colors.black45),
+                      contentPadding: EdgeInsets.only(bottom:width*0.02),
                       hintText: "Mobile Number",
                       focusedBorder: InputBorder.none,
                       enabledBorder: InputBorder.none,
@@ -722,9 +702,9 @@ class _OperatorOffersState extends State<OperatorOffers> {
              //   getHome(numController.text.toString(),"top_up");
               },
               child: Padding(
-                padding: const EdgeInsets.only(right: 10),
+                padding: const EdgeInsets.only(right: 20),
                 child: Container(
-                  height: ss.height * 0.08,
+                  height: ss.height * 0.06,
                   child: Icon(
                     Icons.mobile_friendly,
                     color: Colors.white,
@@ -732,17 +712,10 @@ class _OperatorOffersState extends State<OperatorOffers> {
                   decoration: BoxDecoration(
                       color: dash == "1" ? themePink : themeBlue,
                       border: Border.all(color: Colors.black12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: (Colors.grey.shade300),
-                          spreadRadius: 1,
-                          blurRadius: 1,
-                          offset: Offset(0, 1),
-                        ),
-                      ],
+
                       borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(25),
-                          topRight: Radius.circular(25))),
+                          bottomRight: Radius.circular(10),
+                          topRight: Radius.circular(10))),
                 ),
               ),
             ),

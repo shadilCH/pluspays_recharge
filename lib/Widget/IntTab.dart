@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pluspay/Api/dashChangeApi.dart';
+import 'package:pluspay/Api/providersByCountryApi.dart';
 import 'package:pluspay/Const/Constants.dart';
+import 'package:pluspay/Const/image_const.dart';
 import 'package:pluspay/Const/sharedPref.dart';
 import 'package:pluspay/SubScreens/CountrySelect.dart';
 import 'package:pluspay/SubScreens/OperatorSelect.dart';
 import 'package:pluspay/Widget/yourAccount.dart';
 
 import '../Api/countryByServiceApi.dart';
+import '../Api/providersByServVoucherNewApi.dart';
+import '../SubScreens/OperatorOffers.dart';
 import '../main.dart';
 
 class InternationalTab extends StatefulWidget {
@@ -25,11 +29,11 @@ class InternationalTab extends StatefulWidget {
 
 class _InternationalTabState extends State<InternationalTab> {
   var isLoading = false;
+  var isvoucherLoading = false;
   var arrList = [];
   var Countries = [];
   var selectedCode;
   var dash = "0";
-
   var wallet_amount;
   var due_amount;
   int _selectedIndex = 0;
@@ -55,6 +59,40 @@ class _InternationalTabState extends State<InternationalTab> {
       "text":"DTH",
     },
   ];
+  var prepaidProviders =[
+    {
+      "image":ImageConst.friendi,
+      "name":"Friendi KSA"
+    },
+    {
+      "image":ImageConst.stc,
+      "name":"STC KSA"
+    },
+    {
+      "image":ImageConst.mobily,
+      "name":"Mobily KSA"
+    },
+    {
+      "image":ImageConst.zain,
+      "name":"Zain KSA"
+    },
+    {
+      "image":ImageConst.lebara,
+      "name":"Lebara KSA"
+    },
+    {
+      "image":ImageConst.salam,
+      "name":"Salam KSA"
+    },
+    {
+      "image":ImageConst.redbull,
+      "name":"Red Bull KSA"
+    }
+  ];
+  var provider;
+  List<dynamic> allProviders = [];
+  List<dynamic> ksaVoucher = [];
+  List<dynamic> dthList = [];
 
 
   @override
@@ -65,8 +103,63 @@ class _InternationalTabState extends State<InternationalTab> {
     print("xoxoxo");
     getHome();
 
-    setState(() {});
+    setState(() {
+      fetchAllProviders();
+      dthproviders();
+    });
   }
+  Future<List<Map<String, dynamic>>> fetchAllProviders() async {
+    setState(() {
+      isvoucherLoading= true;
+    });
+    var countryMap = await countryByServiceApi("DigitalProduct");
+    print("dddddddddddddddd");
+    print(countryMap);
+    var countries=countryMap["countries"];
+    for (var countryIso in countries) {
+      var country = countryIso["CountryIso"];
+      var providers = await providerByCountryApi(country);
+      provider = providers["providers"];
+      if(country=="SA"){
+        ksaVoucher.addAll(providers["providers"]);
+      }
+      allProviders.addAll(provider);
+      setState(() {
+
+      });
+    }
+    print(allProviders);
+    print("nnnnnnnnnnnn");
+    setState(() {
+      isvoucherLoading= false;
+    });
+    return [];
+  }
+  Future<List<Map<String, dynamic>>> dthproviders() async {
+    setState(() {
+      isvoucherLoading= true;
+    });
+    var countryMap = await countryByServiceApi("tv");
+    print("dddddddddddddddd");
+    print(countryMap);
+    var countries=countryMap["countries"];
+    for (var countryIso in countries) {
+      var country = countryIso["CountryIso"];
+      var providers = await provSrvVoucherNewApi("tv",country);
+      provider = providers["providers"];
+      dthList.addAll(provider);
+      setState(() {
+
+      });
+    }
+    print(allProviders);
+    print("nnnnnnnnnnnn");
+    setState(() {
+      isvoucherLoading= false;
+    });
+    return [];
+  }
+
   Future<String> getCountry() async {
     var rsp = await countryByServiceApi("DigitalProduct");
     //
@@ -125,15 +218,20 @@ class _InternationalTabState extends State<InternationalTab> {
               children: [
                 tab(),
                 _selectedIndex==0?Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Balance_Due("Balance Amount", wallet_amount),
+                    SizedBox(
+                      width: width*0.04,
+                    ),
                     Balance_Due("Due Amount", due_amount)
                   ],
                 ):SizedBox(),
                 _selectedIndex==0?txtField():SizedBox(),
                 _selectedIndex==0?FlagGrid():SizedBox(),
-
+                _selectedIndex==1?prepaid():SizedBox(),
+                _selectedIndex == 2?isvoucherLoading==true?Container(child: Center(child: CircularProgressIndicator())):vouchers():SizedBox(),
+                _selectedIndex ==4?isvoucherLoading==true?Container(child: Center(child: CircularProgressIndicator())):dth():SizedBox()
               ],
             )),
           );
@@ -141,19 +239,12 @@ class _InternationalTabState extends State<InternationalTab> {
 
   Widget Balance_Due(String txt, String amount) {
     return Container(
-      height: 150,
-      width: 150,
+      height: width*0.26,
+      width: width*0.32,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         color: themePink,
-        boxShadow: [
-          BoxShadow(
-            color: (Colors.grey.shade400),
-            spreadRadius: 1,
-            blurRadius: 3,
-            offset: Offset(2, 1),
-          ),
-        ],
+
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -164,9 +255,10 @@ class _InternationalTabState extends State<InternationalTab> {
               fit: BoxFit.fitWidth,
               child: Text(
                 txt,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 13,
                     fontWeight: FontWeight.w300),
               ),
             ),
@@ -176,7 +268,7 @@ class _InternationalTabState extends State<InternationalTab> {
                 amount,
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 30,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold),
               ),
             )
@@ -194,45 +286,52 @@ class _InternationalTabState extends State<InternationalTab> {
           MaterialPageRoute(builder: (context) => YourAccount()),
         );
       },
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: (Colors.grey.shade300),
-                spreadRadius: 1,
-                blurRadius: 1,
-                offset: Offset(0, 1),
-              ),
-            ],
-            border: Border.all(color: Colors.black12, width: 1)),
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 20,
-          ),
-          child: Row(
-            children: [
-              Text(
-                "Mobile Number",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Poppins'),
-              ),
-              Spacer(),
-              Container(
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: themePink),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Icon(
-                    Icons.search,
-                    color: Colors.white,
-                  ),
+      child: Center(
+        child: Container(
+          height: width*0.12,
+          width: width*0.86,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: (Colors.grey.shade300),
+                  spreadRadius: 1,
+                  blurRadius: 1,
+                  offset: Offset(0, 1),
                 ),
-              )
-            ],
+              ],
+              ),
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 18,
+            ),
+            child: Row(
+              children: [
+                Text(
+                  "Mobile Number",
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Poppins'),
+                ),
+                Spacer(),
+                Padding(
+                  padding:  EdgeInsets.only(right: width*0.02),
+                  child: CircleAvatar(
+                    backgroundColor: themePink,
+                    radius: width*0.04,
+                    child: Center(
+                      child: Icon(
+                        Icons.search,
+                        size: width*0.05,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -247,9 +346,9 @@ class _InternationalTabState extends State<InternationalTab> {
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
-            crossAxisSpacing: width*0.08,
+            crossAxisSpacing: width*0.05,
             mainAxisSpacing: width*0.01,
-            childAspectRatio: 0.8),
+            childAspectRatio: 0.85),
         itemCount: arrList != null ? arrList.length : 0,
         itemBuilder: (context, index) {
           final item = arrList != null ? arrList[index] : null;
@@ -262,7 +361,7 @@ class _InternationalTabState extends State<InternationalTab> {
   Widget tab(){
     return Row(children: [
       Container(
-        height: width*0.15,
+        height: width*0.1,
         width: width*0.9,
         child: ListView.separated(
             shrinkWrap: true,
@@ -312,79 +411,269 @@ class _InternationalTabState extends State<InternationalTab> {
   }
 
   Flags(var item, int index) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => YourAccount(code: item['dial_code'].toString())),
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: (Colors.grey.shade400),
-                spreadRadius: 1,
-                blurRadius: 3,
-                offset: Offset(1, 1),
-              ),
-            ],
-            border: Border.all(color: Colors.black12),
-            image: DecorationImage(
-                image: NetworkImage(
-                  item['Cflag'].toString(),
-                ),
-                fit: BoxFit.contain)),
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => YourAccount(code: item['dial_code'].toString())),
+            );
+          },
+          child: Container(
+            height: width*0.14,
+            width: width*0.16,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+
+                border: Border.all(color: Colors.black12),
+                image: DecorationImage(
+                    image: NetworkImage(
+                      item['Cflag'].toString(),
+                    ),
+                    fit: BoxFit.contain)),
+          ),
+        ),
+        Text(
+          item["CountryName"],
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontWeight: FontWeight.w500, fontSize: width * 0.025),
+        )
+      ],
+    );
+  }
+
+  prepaid(){
+    return Padding(
+      padding:  EdgeInsets.only(left: width*0.04,right: width*0.03),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("   Prepaid KSA",style: TextStyle(
+            fontSize: width*0.045,
+            fontWeight: FontWeight.bold
+          ),),
+          SizedBox(
+            height: width*0.04,
+          ),
+          GridView.builder(
+            itemCount: prepaidProviders.length,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: 1,
+                crossAxisSpacing: width*0.01,
+                mainAxisSpacing: width*0.01,
+                crossAxisCount: 2),
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => YourAccount(code: "966")),
+                          );
+                        },
+                        child: Container(
+                          height: width*0.35,
+                          width: width*0.37,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                              image: DecorationImage(image:AssetImage(prepaidProviders[index]["image"]!),fit: BoxFit.cover),
+                              borderRadius: BorderRadius.circular(width*0.03)
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: width*0.01,),
+                  Text(prepaidProviders[index]["name"]!,style: TextStyle(fontSize: width*0.03),)
+                ],
+              );
+            },
+          ),
+          Divider(
+            indent: width*0.03,
+            endIndent: width*0.03,
+          ),
+          SizedBox(
+            height: width*0.02,
+          ),
+          Text("   Vouchers KSA",style: TextStyle(
+              fontSize: width*0.045,
+              fontWeight: FontWeight.bold
+          ),),
+          SizedBox(
+            height: width*0.04,
+          ),
+          GridView.builder(
+            itemCount: ksaVoucher.length,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: 0.9,
+                crossAxisSpacing: width*0.01,
+                mainAxisSpacing: width*0.01,
+                crossAxisCount: 2),
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => OperatorOffers(
+                                  id: ksaVoucher[index]['ProviderCode'].toString(),
+                                  service: "DigitalProduct",
+                                )),
+                          );
+                        },
+                        child: Container(
+                          height: width*0.35,
+                          width: width*0.37,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                              image: DecorationImage(image: NetworkImage(ksaVoucher[index]["logo"]),fit: BoxFit.cover),
+                              borderRadius: BorderRadius.circular(width*0.03)
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: width*0.01,),
+                  Text(ksaVoucher[index]["provider_name"],textAlign: TextAlign.center,style: TextStyle(fontSize: width*0.03),)
+                ],
+              );
+            },
+          )
+
+        ],
       ),
     );
   }
 
-  // Widget vouchers(){
-  //   return GridView.builder(
-  //     itemCount: items.length,
-  //     shrinkWrap: true,
-  //     physics: NeverScrollableScrollPhysics(),
-  //     scrollDirection: Axis.vertical,
-  //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-  //         childAspectRatio: 0.9,
-  //         crossAxisSpacing: width*0.01,
-  //         mainAxisSpacing: width*0.01,
-  //         crossAxisCount: 4),
-  //     itemBuilder: (context, index) {
-  //       return Column(
-  //         children: [
-  //           GestureDetector(
-  //             onTap: () {
-  //
-  //               selectItem(index);
-  //
-  //             },
-  //             child: Container(
-  //               height: width*0.17,
-  //               width: width*0.17,
-  //               decoration: BoxDecoration(
-  //                 // color: Colors.blue,
-  //                   borderRadius: BorderRadius.circular(width * 0.03),
-  //                   image: DecorationImage(
-  //                       image: NetworkImage(items[index]["sub_cat_logo"]),fit: BoxFit.cover)),
-  //               // child: Image.asset(images[index]["image1"],fit: BoxFit.fill,),
-  //             ),
-  //           ),
-  //           SizedBox(
-  //             height: width * 0.01,
-  //           ),
-  //           Text(
-  //             items[index]["subcategory"],
-  //             overflow: TextOverflow.ellipsis,
-  //             style: TextStyle(
-  //                 fontWeight: FontWeight.w500, fontSize: width * 0.03),
-  //           )
-  //         ],
-  //       );
-  //     },
-  //   ),
-  // }
+  Widget vouchers(){
+    return GridView.builder(
+      itemCount: allProviders.length,
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          childAspectRatio: 0.9,
+          crossAxisSpacing: width*0.01,
+          mainAxisSpacing: width*0.04,
+          crossAxisCount: 4),
+      itemBuilder: (context, index) {
+        return Column(
+          children: [
+            GestureDetector(
+              onTap: () {
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => OperatorOffers(
+                        id: allProviders[index]['ProviderCode'].toString(),
+                        service: "DigitalProduct",
+                      )),
+                );
+
+              },
+              child: Container(
+                height: width*0.17,
+                width: width*0.17,
+                decoration: BoxDecoration(
+                  // color: Colors.blue,
+                    borderRadius: BorderRadius.circular(width * 0.03),
+                    image: DecorationImage(
+                        image: NetworkImage(allProviders[index]["logo"]),fit: BoxFit.fitHeight)),
+                // child: Image.asset(images[index]["image1"],fit: BoxFit.fill,),
+              ),
+            ),
+            SizedBox(
+              height: width * 0.01,
+            ),
+            Expanded(
+              child: Text(
+                allProviders[index]["provider_name"],
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontWeight: FontWeight.w500, fontSize: width * 0.025),
+              ),
+            )
+
+          ],
+        );
+      },
+    );
+  }
+
+  dth(){
+    return Padding(
+      padding:  EdgeInsets.only(left: width*0.04,right: width*0.03),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          GridView.builder(
+            itemCount: dthList.length,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: 1,
+                crossAxisSpacing: width*0.01,
+                mainAxisSpacing: width*0.01,
+                crossAxisCount: 2),
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => OperatorOffers(
+                                  id: dthList[index]['ProviderCode'].toString(),
+                                  service: "DigitalProduct",
+                                )),
+                          );
+                        },
+                        child: Container(
+                          height: width*0.35,
+                          width: width*0.37,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                              image: DecorationImage(image: NetworkImage(dthList[index]["logo"]),fit: BoxFit.contain),
+                              borderRadius: BorderRadius.circular(width*0.03)
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: width*0.01,),
+                  Text(dthList[index]["provider_name"],style: TextStyle(fontSize: width*0.03),)
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
 
   yourAccNav() {
     return Navigator.push(

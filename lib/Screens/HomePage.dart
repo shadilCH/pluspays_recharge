@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
           preferredSize: Size.fromHeight(80.0),
           child: AppBar(
             backgroundColor: Colors.white,
-            elevation: 1,
+            elevation: 0,
             centerTitle: false,
             titleSpacing: 0,
             automaticallyImplyLeading: false,
@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                 image: AssetImage(
                   "assets/images/logo.png",
                 ),
-                height: 60),
+                height: 55),
           ),
         ),
         body: isLoading == true

@@ -11,6 +11,8 @@ import 'package:pluspay/SubScreens/PaymentSuccess.dart';
 import 'package:pluspay/SubScreens/PrintPage.dart';
 import 'package:pluspay/SubScreens/RechargeNow.dart';
 
+import '../main.dart';
+
 class YourAccount extends StatefulWidget {
   final code;
   const YourAccount({key, this.code}) : super(key: key);
@@ -210,7 +212,7 @@ var  type;
                               GestureDetector(
                                 onTap: () {
                                   Navigator.pop(context);
-// Navigator.push(
+                                  // Navigator.push(
 //   context,
 //   MaterialPageRoute(
 //       builder: (context) => CertificatePasscode()),
@@ -320,17 +322,10 @@ var  type;
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: Container(
-                      height: ss.height * 0.08,
+                      height: ss.height * 0.06,
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: (Colors.grey.shade300),
-                              spreadRadius: 1,
-                              blurRadius: 1,
-                              offset: Offset(0, 1),
-                            ),
-                          ],
+
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(25),
                               topLeft: Radius.circular(25)),
@@ -343,16 +338,17 @@ var  type;
                           autofocus: false,
                           keyboardType: TextInputType.number,
                           style: TextStyle(
-                            fontSize: ss.height * 0.026,
+                            fontSize: ss.height * 0.02,
                             letterSpacing: 0.8,
                             fontWeight: FontWeight.w600,
                           ),
                           decoration: new InputDecoration(
                             border: InputBorder.none,
+                            contentPadding: EdgeInsets.only(top: width*0.01,bottom: width*0.02),
                             prefixIconConstraints:
                                 BoxConstraints(minWidth: 0, minHeight: 0),
                             hintStyle: TextStyle(
-                                fontSize: ss.height * 0.023,
+                                fontSize: ss.height * 0.02,
                                 fontWeight: FontWeight.w300,
                                 color: Colors.black45),
                             hintText: "Mobile Number",
@@ -374,7 +370,7 @@ var  type;
                     child: Padding(
                       padding: const EdgeInsets.only(right: 10),
                       child: Container(
-                        height: ss.height * 0.08,
+                        height: ss.height * 0.06,
                         child: Icon(
                           Icons.search,
                           color: Colors.white,
@@ -597,7 +593,7 @@ var  type;
     return GestureDetector(
       onTap: onTapp,
       child: Card(
-        elevation: 5,
+        // elevation: 5,
         color:  dash == "1" ? themePink : themeBlue,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
@@ -607,7 +603,7 @@ var  type;
                 fontWeight: FontWeight.bold,
                 letterSpacing: 0.5,
                 color: Colors.white,
-                fontSize: MediaQuery.of(context).size.height * 0.03),
+                fontSize: MediaQuery.of(context).size.height * 0.023),
           ),
         ),
       ),
