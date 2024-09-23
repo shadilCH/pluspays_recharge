@@ -336,7 +336,7 @@ var code;
                         child: TextFormField(
                           controller: numController,
                           cursorColor: Colors.black,
-                          autofocus: false,
+                          autofocus: true,
                           keyboardType: TextInputType.number,
                           style: TextStyle(
                             fontSize: width * 0.04,
@@ -364,10 +364,16 @@ var code;
                                 );
                               },
                               child: Container(
+                                width: width*0.18,
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.arrow_drop_down_sharp),
+                                    Container(
+                                      child: Center(child: code!=""?Text("+"+code,style: TextStyle(fontSize: width*0.04,),):Text("+00"+code,style: TextStyle(fontSize: width*0.04,),)),
 
-                                width: width*0.12,
-                                child: Center(child: Text("+"+code,style: TextStyle(fontSize: width*0.04,),)),
-
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             hintStyle: TextStyle(
