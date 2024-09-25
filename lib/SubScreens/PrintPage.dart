@@ -217,34 +217,34 @@ class _Page1State extends State<Print> {
 
     MaxxSunmiPrinter.printText(
       "RECEIPT NO    :  "+DateTime.now().millisecond.toString(),
-      styles: SunmiStyles(alignment: SunmiAlign.left,isBold: true),
+      styles: SunmiStyles(alignment: SunmiAlign.left,size: SunmiSize.customSize(22),font: SunmiFont.khmerOs),
     );
     if( shop_name.toString()!="null"){
       MaxxSunmiPrinter.printText(
-        "SHOP NAME    :  "+name.toString(),
-        styles: SunmiStyles(alignment: SunmiAlign.left,isBold: true),
+        "SHOP NAME     :  "+shop_name.toString(),
+        styles: SunmiStyles(alignment: SunmiAlign.left,size: SunmiSize.customSize(22),font: SunmiFont.khmerOs),
       );
 
     }
     if( TransactionID.toString()!="null"){
       MaxxSunmiPrinter.printText(
-        "RECHARGE ID   :  "+TransactionID.toString(),
-        styles: SunmiStyles(alignment: SunmiAlign.left,isBold: true),
+        "TRANSACTION ID:  "+TransactionID.toString(),
+        styles: SunmiStyles(alignment: SunmiAlign.left,size: SunmiSize.customSize(22),font: SunmiFont.khmerOs),
       );
 
 
     }
     if( RechargeID.toString()!="null"){
       MaxxSunmiPrinter.printText(
-        "RECHARGE ID      :  "+RechargeID.toString(),
-        styles: SunmiStyles(alignment: SunmiAlign.left,isBold: true),
+        "RECHARGE ID   :  "+RechargeID.toString(),
+        styles: SunmiStyles(alignment: SunmiAlign.left,size: SunmiSize.customSize(22),font: SunmiFont.khmerOs),
       );
 
     }
     if( coupen_info.toString()!="null"){
       MaxxSunmiPrinter.printText(
-        "COUPON INFO      :  "+coupen_info.toString(),
-        styles: SunmiStyles(alignment: SunmiAlign.left,isBold: true),
+        "COUPON INFO   :  "+coupen_info.toString(),
+        styles: SunmiStyles(alignment: SunmiAlign.left,size: SunmiSize.customSize(22),font: SunmiFont.khmerOs),
       );
 
     }
@@ -252,44 +252,44 @@ class _Page1State extends State<Print> {
 
     if( provider_name.toString()!="null"){
       MaxxSunmiPrinter.printText(
-        "PROVIDER NAME      :  "+provider_name.toString(),
-        styles: SunmiStyles(alignment: SunmiAlign.left,isBold: true),
+        "PROVIDER NAME :  "+provider_name.toString(),
+        styles: SunmiStyles(alignment: SunmiAlign.left,size: SunmiSize.customSize(22),font: SunmiFont.khmerOs),
       );
 
     }
 
     if( recharge_info.toString()!="null"){
       MaxxSunmiPrinter.printText(
-        "RECHARGE INFO      :  "+recharge_info.toString(),
-        styles: SunmiStyles(alignment: SunmiAlign.left,isBold: true),
+        "RECHARGE INFO :  "+recharge_info.toString(),
+        styles: SunmiStyles(alignment: SunmiAlign.left,size: SunmiSize.customSize(22),font: SunmiFont.khmerOs),
       );
 
     }
     if( voucher_info.toString()!="null"){
       MaxxSunmiPrinter.printText(
-        "VOUCHER INFO      :  "+voucher_info.toString(),
-        styles: SunmiStyles(alignment: SunmiAlign.left,isBold: true),
+        "VOUCHER INFO  :  "+voucher_info.toString(),
+        styles: SunmiStyles(alignment: SunmiAlign.left,size: SunmiSize.customSize(22),font: SunmiFont.khmerOs),
       );
 
     }
     if( location.toString()!="null"){
       MaxxSunmiPrinter.printText(
         "LOCATION      :  "+location.toString(),
-        styles: SunmiStyles(alignment: SunmiAlign.left,isBold: true),
+        styles: SunmiStyles(alignment: SunmiAlign.left,size: SunmiSize.customSize(22),font: SunmiFont.khmerOs),
       );
 
     }
     if( AccountNumber.toString()!="null"){
       MaxxSunmiPrinter.printText(
         "MOBILE NUMBER :  "+AccountNumber.toString(),
-        styles: SunmiStyles(alignment: SunmiAlign.left,isBold: true),
+        styles: SunmiStyles(alignment: SunmiAlign.left,size: SunmiSize.customSize(22),font: SunmiFont.khmerOs),
       );
 
     }
     if( RechargeType.toString()!="null"){
       MaxxSunmiPrinter.printText(
         "TYPE          :  "+RechargeType.toString(),
-        styles: SunmiStyles(alignment: SunmiAlign.left,isBold: true),
+        styles: SunmiStyles(alignment: SunmiAlign.left,size: SunmiSize.customSize(22),font: SunmiFont.khmerOs),
       );
 
     }
@@ -297,7 +297,7 @@ class _Page1State extends State<Print> {
     if( recharge_amount.toString()!="null"){
       MaxxSunmiPrinter.printText(
         "AMOUNT        :  "+recharge_amount.toString(),
-        styles: SunmiStyles(alignment: SunmiAlign.left,isBold: true),
+        styles: SunmiStyles(alignment: SunmiAlign.left,size: SunmiSize.customSize(22),font: SunmiFont.khmerOs),
       );
 
     }
@@ -306,7 +306,7 @@ class _Page1State extends State<Print> {
     if( RechargedTime.toString()!="null"){
       MaxxSunmiPrinter.printText(
         "DATE & TIME   :  "+RechargedTime.toString(),
-        styles: SunmiStyles(alignment: SunmiAlign.left,isBold: true),
+        styles: SunmiStyles(alignment: SunmiAlign.left,size: SunmiSize.customSize(22),font: SunmiFont.khmerOs),
       );
 
     }
@@ -316,10 +316,11 @@ class _Page1State extends State<Print> {
 
 
     MaxxSunmiPrinter.printText(
-      "STATUS        :  "+"SUCCESS",
-      styles: SunmiStyles(alignment: SunmiAlign.left,isBold: true),
+      "STATUS          :  "+"SUCCESS",
+      styles: SunmiStyles(alignment: SunmiAlign.left,size: SunmiSize.customSize(22),font: SunmiFont.khmerOs),
     );
 
+    MaxxSunmiPrinter.paperFeed();
 
 
     setState(() {
@@ -378,20 +379,20 @@ class _Page1State extends State<Print> {
                                 runSpacing: 10,
                                 children: [
 
-                                  DetailsB("SHOP NAME", shop_name.toUpperCase()),
-                                  Details("TRANSACTION ID", TransactionID.toUpperCase()),
-                                  Details("RECHARGE ID", RechargeID.toUpperCase()),
-                                  Details("COUPON INFO", coupen_info.toUpperCase()),
-                                  Details("VOUCHER INFO", voucher_info.toUpperCase()),
-                                  Details("RECHARGE INFO", recharge_info.toUpperCase()),
-                                  Details("OPERATOR", provider_name.toUpperCase()),
-                                  Details("LOCATION", location.toUpperCase()),
-                                  Details("MOBILE NUMBER", AccountNumber.toUpperCase()),
-                                  Details("TYPE", RechargeType.toUpperCase()),
-                                  Details("AMOUNT", recharge_amount.toUpperCase()),
+                                  shop_name!="null"?DetailsB("SHOP NAME", shop_name.toUpperCase()):SizedBox(),
+                                  TransactionID!="null"?Details("TRANSACTION ID", TransactionID.toUpperCase()):SizedBox(),
+                                  RechargeID!="null"?Details("RECHARGE ID", RechargeID.toUpperCase()):SizedBox(),
+                                  coupen_info!="null"?Details("COUPON INFO", coupen_info.toUpperCase()):SizedBox(),
+                                  voucher_info!="null"?Details("VOUCHER INFO", voucher_info.toUpperCase()):SizedBox(),
+                                  recharge_info!="null"?Details("RECHARGE INFO", recharge_info.toUpperCase()):SizedBox(),
+                                  provider_name!="null"?Details("OPERATOR", provider_name.toUpperCase()):SizedBox(),
+                                  location!="null"?Details("LOCATION", location.toUpperCase()):SizedBox(),
+                                  AccountNumber!="null"?Details("MOBILE NUMBER", AccountNumber.toUpperCase()):SizedBox(),
+                                  RechargeType!="null"?Details("TYPE", RechargeType.toUpperCase()):SizedBox(),
+                                  recharge_amount!="null"?Details("AMOUNT", recharge_amount.toUpperCase()):SizedBox(),
 
 
-                                  Details("DATE & TIME", RechargedTime.toUpperCase()),
+                                  RechargedTime!="null"?Details("DATE & TIME", RechargedTime.toUpperCase()):SizedBox(),
                                   Details("STATUS", "success".toUpperCase()),
 
                                 ],
@@ -515,7 +516,8 @@ class _Page1State extends State<Print> {
   Widget Button3(String label) {
     return GestureDetector(
       onTap:isTap==true?null:(){
-
+        print(widget.id);
+        print("gggggggggg");
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => BtTestPt(data:widget.id)),

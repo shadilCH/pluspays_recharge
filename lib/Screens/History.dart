@@ -7,6 +7,8 @@ import 'package:pluspay/Api/transactionSaleApi.dart';
 import 'package:pluspay/Const/Constants.dart';
 import 'package:pluspay/SubScreens/PrintPage.dart';
 
+import '../main.dart';
+
 
 
 class HistoryPage extends StatefulWidget {
@@ -247,10 +249,20 @@ class _TransState extends State<HistoryPage> {
 
               selectDateRange(context);
             },
-            child: Text(
-              "FILTER",
-              style: TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.w600, fontSize: 12),
+            child: Container(
+              height: width*0.04,
+              width: width*0.15,
+              decoration: BoxDecoration(
+                  color: themeBlue,
+                // borderRadius: BorderRadius.circular(width*0.03)
+              ),
+              child: Center(
+                child: Text(
+                  "FILTER",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w600, fontSize: width*0.035),
+                ),
+              ),
             ),
           ),
         ),
@@ -311,76 +323,83 @@ class _TransState extends State<HistoryPage> {
       onTap: () {
         Navigator.push(context, CupertinoPageRoute(builder: (context) => Print(id: item['TransactionID'].toString(),),));
       },
-      child:Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                height: ss.height * 0.1,
-                width: ss.width * 0.15,
-                color: Colors.blue[400],
+      child:Container(
+        width: width*1,
+        height: width*0.22,
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              alignment: Alignment.center,
+              height: width*0.14,
+              width: width*0.18,
+              decoration: BoxDecoration(
+                color:themeBlue,
+              ),
+              child: Center(
                 child: Text(
                   item['provider_name'].toString(),
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: ss.height * 0.02,
+                      fontSize: width*0.032,
                       fontWeight: FontWeight.w600),
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item['TransactionID'].toString(),
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: ss.height * 0.025),
-                  ),
-                  Text(
-                    item['RechargedTime'].toString(),
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: Colors.grey[500],
-                        fontSize: ss.height * 0.02),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Text(
-                    item['recharge_amount'].toString().split(" ").first.toString(),
-                    style: TextStyle(
-                        color: Colors.blue[900],
-                        fontSize: ss.height * 0.025,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    item['recharge_amount'].toString().split(" ").last.toString(),
-                    style: TextStyle(
-                        color: Colors.blue[900],
-                        fontSize: ss.height * 0.018,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5), color: Colors.green),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "SUCCESS",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: ss.height * 0.018,
-                        fontWeight: FontWeight.w600),
-                  ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  item['TransactionID'].toString(),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: width*0.04),
                 ),
-              )
-            ],
-          ),
+                Text(
+                  item['RechargedTime'].toString(),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.grey[500],
+                      fontSize: width*0.035),
+                ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  item['recharge_amount'].toString().split(" ").first.toString(),
+                  style: TextStyle(
+                      color: Colors.blue[900],
+                      fontSize: width*0.042,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  item['recharge_amount'].toString().split(" ").last.toString(),
+                  style: TextStyle(
+                      color: Colors.blue[900],
+                      fontSize: width*0.035,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5), color: Colors.green),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "SUCCESS",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: width * 0.028,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+            )
+          ],
         ),
       ),
 

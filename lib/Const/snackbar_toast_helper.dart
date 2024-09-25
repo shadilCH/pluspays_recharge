@@ -32,7 +32,7 @@ return  Fluttertoast.showToast(
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,
 
-      textColor: Colors.black,
+      textColor: Colors.white,
       fontSize: 16.0
   );
 }

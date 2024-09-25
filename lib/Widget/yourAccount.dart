@@ -16,7 +16,8 @@ import '../main.dart';
 
 class YourAccount extends StatefulWidget {
   final code;
-  const YourAccount({key, this.code}) : super(key: key);
+  final ksa;
+  const YourAccount({key, this.code,this.ksa}) : super(key: key);
 
   @override
   _YourAccountState createState() => _YourAccountState();
@@ -497,7 +498,7 @@ var code;
               builder: (context) => RechargeNow(
                     id: item['SkuCode'].toString(),
                     type: "1",
-                    num: numController.text.toString(),
+                    num: code+numController.text.toString(),
                   )),
         );
       },
@@ -518,17 +519,17 @@ var code;
                         item['ReceiveCurrencyIso'].toString(),
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: ss.height * 0.03,
+                            fontSize: width*0.05,
                             fontWeight: FontWeight.w600),
                       ),
                       FittedBox(
                         child: Text(
                           dash == "0"
                               ? item['Our_SendValue'].toString()
-                              : item['ReceiveValue'].toString(),
+                              : widget.ksa=="ksa"?item['Our_SendValue'].toString():item['ReceiveValue'].toString(),
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: ss.height * 0.04,
+                              fontSize: width * 0.07,
                               fontWeight: FontWeight.w600),
                         ),
                       ),
@@ -550,7 +551,7 @@ var code;
                         Text(
                           dash == "0"
                               ? item['Our_SendValue'].toString()
-                              : item['ReceiveValue'].toString(),
+                              : widget.ksa=="ksa"?item['Our_SendValue'].toString():item['ReceiveValue'].toString(),
                           style: TextStyle(
                               color: dash == "1" ? themePink : themeBlue,
                               fontSize: ss.height * 0.032,
@@ -562,7 +563,7 @@ var code;
                           maxLines: 2,
                           style: TextStyle(
                               color: dash == "1" ? themePink : themeBlue,
-                              fontSize: ss.height * 0.022,
+                              fontSize: width*0.037,
                               fontWeight: FontWeight.w500),
                         ),
                         Text(

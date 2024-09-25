@@ -8,6 +8,8 @@ import 'package:pluspay/Api/rechargeInfoApi.dart';
 import 'package:pluspay/Const/snackbar_toast_helper.dart';
 import 'package:pluspay/PrintHelper/TestPrint.dart';
 
+import '../main.dart';
+
 
 
 
@@ -28,7 +30,7 @@ class _MyAppState extends State<BtTestPt> {
   BlueThermalPrinter bluetooth = BlueThermalPrinter.instance;
 
   List<BluetoothDevice>? _devices;
-  late BluetoothDevice _device;
+  BluetoothDevice? _device;
   bool _connected = false;
   late String pathImage;
 ///
@@ -98,9 +100,15 @@ class _MyAppState extends State<BtTestPt> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: Colors.white,
         key: _scaffoldKey,
         appBar: AppBar(
-          title: Text('Choose your device'),
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          title: Text('Choose your device',style: TextStyle(
+            fontSize: width*0.05,
+            fontWeight: FontWeight.bold
+          ),),
         ),
         body: isLoading==true?Container(
 
@@ -119,7 +127,8 @@ class _MyAppState extends State<BtTestPt> {
                     Text(
                       'Device:',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontSize: width*0.04,
+                        // fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(width: 30,),
@@ -132,26 +141,41 @@ class _MyAppState extends State<BtTestPt> {
                     ),
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(height: width*0.08,),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     GestureDetector(
                       onTap:(){
                         initPlatformState();
                       },
                       child: Container(
-                          color: Colors.pink,
-                          child: Text('Refresh', style: TextStyle(color: Colors.white),)),
+                          width: width*0.25,
+                          height: width*0.08,
+
+                          decoration: BoxDecoration(
+                            borderRadius:BorderRadius.circular(width*0.03),
+                            color: Colors.pink,
+                          ),
+                          child: Center(child: Text('Refresh', style: TextStyle(color: Colors.white,fontSize: width*0.035),))),
                     ),
                     SizedBox(width: 20,),
                     GestureDetector(
                       onTap:
                       _connected ? _disconnect : _connect,
                       child: Container(
-                          color: _connected ?Colors.red:Colors.green,
-                          child: Text(_connected ? 'Disconnect' : 'Connect', style: TextStyle(color: Colors.white),)),
+                        width: width*0.25,
+                          height: width*0.08,
+                          decoration: BoxDecoration(
+                            borderRadius:BorderRadius.circular(width*0.03),
+                            color: _connected ?Colors.red:Colors.green,
+                          ),
+                          child: Center(child: Text(
+                            _connected ? 'Disconnect' : 'Connect', style: TextStyle(
+                              color: Colors.white,
+                            fontSize: width*0.035
+                          ),))),
                     ),
                   ],
                 ),
@@ -168,10 +192,35 @@ class _MyAppState extends State<BtTestPt> {
 
                     },
                     child: Container(
-                        color: Colors.pink,
-                        child: Text(isTap==true?"Printing..":'Start Print', style: TextStyle(color: Colors.white))),
+                      height: width*0.12,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(width*0.03),
+                          color: Colors.pink,
+                        ),
+
+                        child: Center(child: Text(isTap==true?"Printing..":'Start Print', style: TextStyle(color: Colors.white)))),
                   ),
                 ),
+                SizedBox(
+                  height: width*0.03,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                  child:  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: width*0.12,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(width*0.03),
+                          color: Colors.pink,
+                        ),
+
+                        child: Center(child: Text("Cancel", style: TextStyle(color: Colors.white)))),
+                  ),
+                ),
+
               ],
             ),
           ),
@@ -220,6 +269,9 @@ class _MyAppState extends State<BtTestPt> {
   }
 
   List<DropdownMenuItem<BluetoothDevice>> _getDeviceItems() {
+    setState(() {
+      isLoading = true;
+    });
     List<DropdownMenuItem<BluetoothDevice>> items = [];
     if (_devices!.isEmpty) {
       items.add(DropdownMenuItem(
@@ -233,6 +285,9 @@ class _MyAppState extends State<BtTestPt> {
         ));
       });
     }
+    setState(() {
+      isLoading = false;
+    });
     return items;
   }
 
@@ -243,7 +298,7 @@ class _MyAppState extends State<BtTestPt> {
     } else {
       bluetooth.isConnected.then((isConnected) {
         if (isConnected!) {
-          bluetooth.connect(_device).catchError((error) {
+          bluetooth.connect(_device!).catchError((error) {
             setState(() => _connected = false);
           });
           setState(() => _connected = true);

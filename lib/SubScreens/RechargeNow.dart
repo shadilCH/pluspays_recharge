@@ -9,6 +9,8 @@ import 'package:pluspay/Const/snackbar_toast_helper.dart';
 import 'package:pluspay/SubScreens/PaymentSuccess.dart';
 import 'package:pluspay/SubScreens/PrintPage.dart';
 
+import '../main.dart';
+
 class RechargeNow extends StatefulWidget {
   final id;
   final type;
@@ -192,27 +194,30 @@ class _RechargeNowState extends State<RechargeNow> {
               width: MediaQuery.of(context).size.width * 0.9,
               child: Stack(
                 children: [
-                  Container(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20, bottom: 20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            CoupenTitle,
-                            style: TextStyle(
-                                color: dash == "1" ? themePink : themeBlue,
-                                fontSize: ss.height * 0.03,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ],
+                  Positioned(
+                    bottom: width*0.02,
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20, bottom: 20),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              CoupenTitle,
+                              style: TextStyle(
+                                  color: dash == "1" ? themePink : themeBlue,
+                                  fontSize: width * 0.04,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                  dash=="1"? Positioned(
-                    bottom: 0,
-                    right: 0,
+                    top: width*0.04,
+                    right: width*0.06,
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.1,
                       decoration: BoxDecoration(
@@ -256,42 +261,46 @@ class _RechargeNowState extends State<RechargeNow> {
             ProviderName,
             style: TextStyle(
                 color: dash == "1" ? themePink : themeBlue,
-                fontSize: ss.height * 0.03,
+                fontSize: width * 0.045,
                 fontWeight: FontWeight.bold),
           ),
           top: 0,
           right: 8,
           left: ss.width * 0.22,
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: Align(
-            alignment: Alignment.topLeft,
-            child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: dash == "1" ? themePink : themeBlue),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      ReceiveCurrencyIso,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: ss.height * 0.04,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    Text(
-                      dash=="1"?ReceiveValue:Our_SendValue,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: ss.height * 0.04,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ],
+        Positioned(
+          top: width*0.18,
+          left: width*0.06,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: dash == "1" ? themePink : themeBlue),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        ReceiveCurrencyIso,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: width * 0.06,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      Text(
+                        dash=="1"?ReceiveValue:Our_SendValue,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: width * 0.08,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

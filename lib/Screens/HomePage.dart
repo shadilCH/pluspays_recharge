@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pluspay/Api/walletAmnt.dart';
 import 'package:pluspay/Const/Constants.dart';
@@ -125,17 +126,21 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.white,
                                 fontFamily: 'Poppins',
                                 fontSize:
-                                    MediaQuery.of(context).size.width * 0.035,
+                                    MediaQuery.of(context)
+                                        .size.width * 0.035,
                                 fontWeight: FontWeight.bold,
                                 letterSpacing: 1),
                             tabs: [
-                              Tab(text: "INTERNATIONAL"),
+                              Tab(
+                                text: "INTERNATIONAL",
+                              ),
                               Tab(
                                 text: "INDIAN",
                               ),
 
                             ],
                             indicatorSize: TabBarIndicatorSize.tab,
+                            dividerColor: Colors.transparent,
                             indicator: BoxDecoration(
                                 gradient: selct == 0
                                     ? LinearGradient(
@@ -155,7 +160,8 @@ class _HomePageState extends State<HomePage> {
                                         bottomLeft: Radius.circular(25))
                                     : BorderRadius.only(
                                         topRight: Radius.circular(25),
-                                        bottomRight: Radius.circular(25))),
+                                        bottomRight: Radius.circular(25)),
+                            ),
                             unselectedLabelStyle: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Poppins',

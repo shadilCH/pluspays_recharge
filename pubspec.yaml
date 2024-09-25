@@ -45,7 +45,7 @@ dependencies:
 
   path_provider: ^2.0.14
   bytes_image_viewer: ^0.0.4
-#  esc_pos_bluetooth: ^0.3.0
+# esc_pos_bluetooth: ^0.4.1
   flutter_bluetooth_basic: ^0.1.5
   image: ^4.2.0
   provider: ^6.0.1
