@@ -9,7 +9,7 @@ import 'package:pluspay/Const/sharedPref.dart';
 
 
 
-Future providerByCountryApi(country_iso) async {
+Future providerByCountryApi(country_iso,service) async {
 
 
   var token = await getSharedPrefrence('token');
@@ -24,7 +24,7 @@ Future providerByCountryApi(country_iso) async {
     "server-sslkey": serverKey},
     encoding: Encoding.getByName('utf-8'),
   body: {
-    'service':"DigitalProduct",
+    'service':service,
 
     'countryIso':country_iso,
 

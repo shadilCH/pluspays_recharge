@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(80.0),
+          preferredSize: Size.fromHeight(height*0.1),
           child: AppBar(
             backgroundColor: Colors.white,
             elevation: 0,
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                 image: AssetImage(
                   "assets/images/logo.png",
                 ),
-                height: 55),
+                height: height*0.065,),
           ),
         ),
         body: isLoading == true
@@ -94,15 +94,15 @@ class _HomePageState extends State<HomePage> {
                 length: 2,
                 child: Container(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding:  EdgeInsets.all(width*0.03),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
                           width: width*1,
-                          height: width*0.13,
+                          height: height*0.065,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
+                              borderRadius: BorderRadius.circular(width*0.06),
                               color: Colors.white,
                               boxShadow: [
                                 BoxShadow(
@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ],
                               border:
-                                  Border.all(color: Colors.black12, width: 1)),
+                                  Border.all(color: Colors.black12, width: width*0.002)),
                           child: TabBar(
                             isScrollable: false,
                             onTap: (index) {
@@ -126,10 +126,9 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.white,
                                 fontFamily: 'Poppins',
                                 fontSize:
-                                    MediaQuery.of(context)
-                                        .size.width * 0.035,
+                                    width*0.035,
                                 fontWeight: FontWeight.bold,
-                                letterSpacing: 1),
+                                letterSpacing: width*0.003),
                             tabs: [
                               Tab(
                                 text: "INTERNATIONAL",
@@ -156,17 +155,16 @@ class _HomePageState extends State<HomePage> {
                                 // color: selct == 0 ? themeBlue : themePink,
                                 borderRadius: selct == 0
                                     ? BorderRadius.only(
-                                        topLeft: Radius.circular(25),
-                                        bottomLeft: Radius.circular(25))
+                                        topLeft: Radius.circular(width*0.06),
+                                        bottomLeft: Radius.circular(width*0.06))
                                     : BorderRadius.only(
-                                        topRight: Radius.circular(25),
-                                        bottomRight: Radius.circular(25)),
+                                        topRight: Radius.circular(width*0.06),
+                                        bottomRight: Radius.circular(width*0.06)),
                             ),
                             unselectedLabelStyle: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Poppins',
-                                fontSize:
-                                    MediaQuery.of(context).size.width * 0.035,
+                                fontSize: width * 0.035,
                                 fontWeight: FontWeight.bold),
                             unselectedLabelColor:Colors.black,
                             automaticIndicatorColorAdjustment: true,
@@ -174,7 +172,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         SizedBox(
-                          height: 20,
+                          height: height*0.03,
                         ),
                         Flexible(
                           child: Container(

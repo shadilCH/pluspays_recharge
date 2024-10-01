@@ -48,7 +48,7 @@ class _OperatorSelectState extends State<OperatorSelect> {
     if (widget.service == null || widget.service=="DigitalProduct") {
       print("noww recharge");
 
-      rsp = await providerByCountryApi(widget.id.toString());
+      rsp = await providerByCountryApi(widget.id.toString(),"DigitalProduct");
     } else if (widget.service == "tv"){
       print("noww tvvv");
       rsp = await provSrvVoucherNewApi(widget.service.toString(), widget.id.toString());
