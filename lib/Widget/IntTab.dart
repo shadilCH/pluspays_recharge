@@ -212,11 +212,11 @@ class _InternationalTabState extends State<InternationalTab> {
                 _selectedIndex==0?Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Balance_Due("Balance Amount", wallet_amount),
+                    Balance_Due("Balance Amount", wallet_amount??"SAR 00.00"),
                     SizedBox(
                       width: width*0.04,
                     ),
-                    Balance_Due("Due Amount", due_amount)
+                    Balance_Due("Due Amount", due_amount??"SAR 00.00")
                   ],
                 ):SizedBox(),
                 _selectedIndex==0?txtField():SizedBox(),
